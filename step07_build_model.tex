@@ -1,0 +1,92 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{geometry}
+\usepackage{parskip}
+
+\geometry{margin=2.5cm}
+
+\definecolor{codebg}{RGB}{245,245,245}
+\definecolor{keyword}{RGB}{0,112,0}
+\definecolor{comment}{RGB}{128,128,128}
+\definecolor{string}{RGB}{180,0,0}
+
+\lstdefinestyle{pythonstyle}{
+    backgroundcolor=\color{codebg},
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{keyword}\bfseries,
+    stringstyle=\color{string},
+    commentstyle=\color{comment}\itshape,
+    language=Python,
+    frame=single,
+    rulecolor=\color{gray!40},
+    breaklines=true,
+    showstringspaces=false,
+    tabsize=4,
+    captionpos=b,
+}
+
+\title{\textbf{Wind Turbine Blade Fault Classification\\Using a Simple CNN}\\[0.5em]
+\large Step 7 --- Build the CNN Model}
+\author{Amreen Batool}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section*{Step 7 --- Build the CNN Model}
+
+\begin{lstlisting}[style=pythonstyle]
+model = models.Sequential([
+    layers.Input(shape=(128, 128, 3)),
+
+    layers.Conv2D(32, (3, 3), activation='relu'),
+    layers.MaxPooling2D(2, 2),
+
+    layers.Conv2D(64, (3, 3), activation='relu'),
+    layers.MaxPooling2D(2, 2),
+
+    layers.Conv2D(128, (3, 3), activation='relu'),
+    layers.MaxPooling2D(2, 2),
+
+    layers.Flatten(),
+    layers.Dense(64, activation='relu'),
+    layers.Dropout(0.5),
+    layers.Dense(1, activation='sigmoid')
+])
+\end{lstlisting}
+
+\subsection*{Explanation of Each Layer}
+
+\begin{itemize}
+    \item \texttt{layers.Input(shape=(128, 128, 3))} \\
+          Input image size is $128 \times 128$ pixels with 3 colour channels (RGB).
+
+    \item \texttt{Conv2D(32, (3,3), activation='relu')} \\
+          First convolution layer. Detects basic image patterns like edges and textures using 32 filters.
+
+    \item \texttt{MaxPooling2D(2,2)} \\
+          Reduces the feature map size by half, keeping only the most important information.
+
+    \item \textbf{Second convolution block} (\texttt{Conv2D(64, ...)}) \\
+          Learns more detailed features using 64 filters.
+
+    \item \textbf{Third convolution block} (\texttt{Conv2D(128, ...)}) \\
+          Learns deeper and more complex features using 128 filters.
+
+    \item \texttt{Flatten()} \\
+          Converts the 2D feature maps into a 1D vector so they can be passed to the dense layers.
+
+    \item \texttt{Dense(64, activation='relu')} \\
+          Fully connected layer for learning final high-level patterns.
+
+    \item \texttt{Dropout(0.5)} \\
+          Randomly sets 50\% of neurons to zero during training. Helps reduce overfitting.
+
+    \item \texttt{Dense(1, activation='sigmoid')} \\
+          Final output layer for binary classification. Produces a probability between 0 and 1. \\
+          Values $> 0.5$ are classified as \texttt{Healthy}; values $\leq 0.5$ as \texttt{Faulty}.
+\end{itemize}
+
+\end{document}

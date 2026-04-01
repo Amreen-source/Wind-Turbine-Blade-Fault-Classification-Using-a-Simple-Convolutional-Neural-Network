@@ -1,0 +1,80 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{geometry}
+\usepackage{parskip}
+
+\geometry{margin=2.5cm}
+
+\definecolor{codebg}{RGB}{245,245,245}
+\definecolor{keyword}{RGB}{0,112,0}
+\definecolor{comment}{RGB}{128,128,128}
+\definecolor{string}{RGB}{180,0,0}
+
+\lstdefinestyle{pythonstyle}{
+    backgroundcolor=\color{codebg},
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{keyword}\bfseries,
+    stringstyle=\color{string},
+    commentstyle=\color{comment}\itshape,
+    language=Python,
+    frame=single,
+    rulecolor=\color{gray!40},
+    breaklines=true,
+    showstringspaces=false,
+    tabsize=4,
+    captionpos=b,
+}
+
+\title{\textbf{Wind Turbine Blade Fault Classification\\Using a Simple CNN}\\[0.5em]
+\large Step 5 --- Preprocess and Augment Images}
+\author{Amreen Batool}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section*{Step 5 --- Preprocess and Augment Images}
+
+\begin{lstlisting}[style=pythonstyle]
+train_datagen = ImageDataGenerator(
+    rescale=1./255,
+    rotation_range=10,
+    width_shift_range=0.1,
+    height_shift_range=0.1,
+    zoom_range=0.1,
+    horizontal_flip=True
+)
+
+val_datagen  = ImageDataGenerator(rescale=1./255)
+test_datagen = ImageDataGenerator(rescale=1./255)
+\end{lstlisting}
+
+\subsection*{Explanation}
+
+\textbf{\texttt{rescale=1./255}}
+\begin{itemize}
+    \item Changes pixel values from the range 0--255 to 0--1.
+\end{itemize}
+
+\textbf{Training augmentation parameters:}
+\begin{itemize}
+    \item \texttt{rotation\_range=10} $\rightarrow$ rotates images slightly (up to $10^\circ$).
+    \item \texttt{width\_shift\_range=0.1} $\rightarrow$ shifts image left or right by up to 10\%.
+    \item \texttt{height\_shift\_range=0.1} $\rightarrow$ shifts image up or down by up to 10\%.
+    \item \texttt{zoom\_range=0.1} $\rightarrow$ zooms in or out by up to 10\%.
+    \item \texttt{horizontal\_flip=True} $\rightarrow$ randomly flips images horizontally.
+\end{itemize}
+
+\textbf{Note:} Validation and test data use \emph{only} rescaling — no augmentation — so that evaluation is performed on unmodified images.
+
+\subsection*{Why Augmentation Is Used}
+
+Data augmentation artificially increases the variety of training images by applying small random transformations. This helps:
+\begin{itemize}
+    \item Reduce overfitting (the model memorising training data).
+    \item Improve generalisation to new, unseen images.
+\end{itemize}
+
+\end{document}

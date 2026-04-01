@@ -1,0 +1,86 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{geometry}
+\usepackage{parskip}
+
+\geometry{margin=2.5cm}
+
+\definecolor{codebg}{RGB}{245,245,245}
+\definecolor{keyword}{RGB}{0,112,0}
+\definecolor{comment}{RGB}{128,128,128}
+\definecolor{string}{RGB}{180,0,0}
+
+\lstdefinestyle{pythonstyle}{
+    backgroundcolor=\color{codebg},
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{keyword}\bfseries,
+    stringstyle=\color{string},
+    commentstyle=\color{comment}\itshape,
+    language=Python,
+    frame=single,
+    rulecolor=\color{gray!40},
+    breaklines=true,
+    showstringspaces=false,
+    tabsize=4,
+    captionpos=b,
+}
+
+\title{\textbf{Wind Turbine Blade Fault Classification\\Using a Simple CNN}\\[0.5em]
+\large Step 11 --- Plot Accuracy and Loss Graphs}
+\author{Amreen Batool}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section*{Step 11 --- Plot Accuracy and Loss Graphs}
+
+\subsection*{Accuracy Plot}
+
+\begin{lstlisting}[style=pythonstyle]
+plt.figure(figsize=(8, 5))
+plt.plot(history.history['accuracy'],     marker='o', label='Training Accuracy')
+plt.plot(history.history['val_accuracy'], marker='s', label='Validation Accuracy')
+plt.xlabel('Epoch')
+plt.ylabel('Accuracy')
+plt.title('Training and Validation Accuracy')
+plt.legend()
+plt.grid(True)
+plt.show()
+\end{lstlisting}
+
+\subsection*{Loss Plot}
+
+\begin{lstlisting}[style=pythonstyle]
+plt.figure(figsize=(8, 5))
+plt.plot(history.history['loss'],     marker='o', label='Training Loss')
+plt.plot(history.history['val_loss'], marker='s', label='Validation Loss')
+plt.xlabel('Epoch')
+plt.ylabel('Loss')
+plt.title('Training and Validation Loss')
+plt.legend()
+plt.grid(True)
+plt.show()
+\end{lstlisting}
+
+\subsection*{Explanation}
+
+These two graphs together show how the model learned over time:
+
+\begin{itemize}
+    \item \textbf{Accuracy graph} --- how training and validation accuracy improved across epochs. Both curves rising together is a good sign.
+    \item \textbf{Loss graph} --- how the error decreased across epochs. Both curves falling together is a good sign.
+    \item If training accuracy is much higher than validation accuracy, this suggests \textit{overfitting}.
+    \item If both are low and similar, the model may be \textit{underfitting}.
+\end{itemize}
+
+\subsection*{Figures to Include}
+
+\begin{itemize}
+    \item \textbf{Figure 2: Training and Validation Accuracy}
+    \item \textbf{Figure 3: Training and Validation Loss}
+\end{itemize}
+
+\end{document}

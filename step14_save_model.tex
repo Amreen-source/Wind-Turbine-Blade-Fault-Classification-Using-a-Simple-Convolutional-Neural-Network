@@ -1,0 +1,107 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{geometry}
+\usepackage{parskip}
+
+\geometry{margin=2.5cm}
+
+\definecolor{codebg}{RGB}{245,245,245}
+\definecolor{keyword}{RGB}{0,112,0}
+\definecolor{comment}{RGB}{128,128,128}
+\definecolor{string}{RGB}{180,0,0}
+\definecolor{outputbg}{RGB}{240,248,255}
+
+\lstdefinestyle{pythonstyle}{
+    backgroundcolor=\color{codebg},
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{keyword}\bfseries,
+    stringstyle=\color{string},
+    commentstyle=\color{comment}\itshape,
+    language=Python,
+    frame=single,
+    rulecolor=\color{gray!40},
+    breaklines=true,
+    showstringspaces=false,
+    tabsize=4,
+    captionpos=b,
+}
+
+\lstdefinestyle{outputstyle}{
+    backgroundcolor=\color{outputbg},
+    basicstyle=\ttfamily\small,
+    frame=single,
+    rulecolor=\color{blue!20},
+    breaklines=true,
+}
+
+\title{\textbf{Wind Turbine Blade Fault Classification\\Using a Simple CNN}\\[0.5em]
+\large Step 14 --- Save the Model}
+\author{Amreen Batool}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section*{Step 14 --- Save the Model}
+
+\begin{lstlisting}[style=pythonstyle]
+model.save("simple_wind_turbine_cnn.h5")
+print("Model saved successfully.")
+\end{lstlisting}
+
+\subsection*{Output}
+
+\begin{lstlisting}[style=outputstyle]
+Model saved successfully.
+\end{lstlisting}
+
+\subsection*{Explanation}
+
+This final step saves the entire trained model --- including its architecture, weights, and training configuration --- to a file called \texttt{simple\_wind\_turbine\_cnn.h5}.
+
+The \texttt{.h5} format (HDF5) is a standard format for storing Keras models.
+
+\subsection*{Why Saving the Model Is Important}
+
+\begin{itemize}
+    \item You do not need to retrain the model every time you want to use it.
+    \item The saved model can be loaded later to make predictions on new images.
+    \item It can be shared with others or deployed in an application.
+\end{itemize}
+
+\subsection*{How to Load the Model Later}
+
+\begin{lstlisting}[style=pythonstyle]
+from tensorflow.keras.models import load_model
+
+loaded_model = load_model("simple_wind_turbine_cnn.h5")
+\end{lstlisting}
+
+\vspace{1em}
+\hrule
+\vspace{1em}
+
+\subsection*{Project Complete}
+
+All 14 steps of the Wind Turbine Blade Fault Classification project have been completed:
+
+\begin{enumerate}
+    \item Import Libraries
+    \item Set Dataset Paths
+    \item Print Dataset Information
+    \item Show Sample Images
+    \item Preprocess and Augment Images
+    \item Load Training, Validation, and Test Data
+    \item Build the CNN Model
+    \item Compile the Model
+    \item Train the Model
+    \item Evaluate the Model
+    \item Plot Accuracy and Loss Graphs
+    \item Confusion Matrix and Classification Report
+    \item Show Example Predictions
+    \item \textbf{Save the Model} $\leftarrow$ \textit{current step}
+\end{enumerate}
+
+\end{document}
